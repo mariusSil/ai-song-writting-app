@@ -1,0 +1,23 @@
+{
+  "name": "ai-song-writing-app",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install": "sh install-deps.sh",
+    "build": "yarn workspaces run build",
+    "start": "cd server && yarn start",
+    "heroku-postbuild": "cd client && yarn install && yarn build && cd ../server && yarn install"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "cacheDirectories": [
+    "client/node_modules",
+    "server/node_modules"
+  ]
+}
