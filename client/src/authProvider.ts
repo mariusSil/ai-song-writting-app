@@ -18,16 +18,17 @@ interface UpdatePasswordParams {
   password: string;
 }
 
-type AuthActionResponse = {
+// Custom response type with our additional fields
+type AppAuthResponse = {
   success: boolean;
-  redirectTo?: string | false;
+  redirectTo?: string;
   otpSent?: boolean;
   message?: string;
   error?: Error;
 };
 
 const authProvider: AuthBindings = {
-  login: async ({ email, otp }: LoginParams): Promise<AuthActionResponse> => {
+  login: async ({ email, otp }: LoginParams): Promise<AppAuthResponse> => {
     // If OTP is provided, verify it
     if (otp) {
       try {
@@ -94,7 +95,7 @@ const authProvider: AuthBindings = {
         // Return a message to indicate that the OTP has been sent
         return {
           success: true,
-          redirectTo: false,
+          redirectTo: "", // Empty string instead of false
           otpSent: true,
           message: "A verification code has been sent to your email.",
         };
@@ -107,7 +108,7 @@ const authProvider: AuthBindings = {
     }
   },
 
-  register: async ({ email }: RegisterParams): Promise<AuthActionResponse> => {
+  register: async ({ email }: RegisterParams): Promise<AppAuthResponse> => {
     try {
       const { error } = await supabaseClient.auth.signInWithOtp({
         email,
@@ -125,7 +126,7 @@ const authProvider: AuthBindings = {
 
       return {
         success: true,
-        redirectTo: false,
+        redirectTo: "", // Empty string instead of false
         otpSent: true,
         message: "A verification code has been sent to your email.",
       };
@@ -137,7 +138,7 @@ const authProvider: AuthBindings = {
     }
   },
 
-  forgotPassword: async ({ email }: ForgotPasswordParams): Promise<AuthActionResponse> => {
+  forgotPassword: async ({ email }: ForgotPasswordParams): Promise<AppAuthResponse> => {
     try {
       const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
         redirectTo: `${window.location.origin}/update-password`,
@@ -152,7 +153,7 @@ const authProvider: AuthBindings = {
 
       return {
         success: true,
-        redirectTo: false,
+        redirectTo: "", // Empty string instead of false
         message: "Please check your email for a reset link.",
       };
     } catch (error) {
@@ -163,7 +164,7 @@ const authProvider: AuthBindings = {
     }
   },
 
-  updatePassword: async ({ password }: UpdatePasswordParams): Promise<AuthActionResponse> => {
+  updatePassword: async ({ password }: UpdatePasswordParams): Promise<AppAuthResponse> => {
     try {
       const { error } = await supabaseClient.auth.updateUser({
         password,
@@ -203,6 +204,18 @@ const authProvider: AuthBindings = {
   },
 
   check: async (): Promise<boolean> => {
+    // Define public routes that don't require authentication
+    const publicRoutes = ["/", "/login", "/forgot-password"];
+    
+    // Get current location
+    const currentPath = window.location.pathname;
+    
+    // If current path is a public route, allow access without authentication
+    if (publicRoutes.some(route => currentPath === route)) {
+      return true;
+    }
+    
+    // Otherwise check for authentication
     try {
       const { data } = await supabaseClient.auth.getSession();
       return Boolean(data?.session);

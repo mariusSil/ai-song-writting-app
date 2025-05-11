@@ -10,7 +10,6 @@ import "@refinedev/antd/dist/reset.css";
 
 import routerBindings, {
   DocumentTitleHandler,
-  NavigateToResource,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
@@ -21,17 +20,15 @@ import authProvider from "./authProvider";
 
 // Components
 import { Header } from "./components/header";
+// Import the new Landing page component
+import Landing from "./pages/landing";
 
 // Pages
 // These will be properly implemented with TypeScript as we build them
-const Login = () => <div>Login Page</div>;
-const Register = () => <div>Register Page</div>;
-const ForgotPassword = () => <div>Forgot Password Page</div>;
 const SongList = () => <div>Song List</div>;
-const SongCreate = () => <div>Song Create</div>;
-const SongEdit = () => <div>Song Edit</div>;
-const SongShow = () => <div>Song View</div>;
-const Landing = () => <div>Landing Page</div>;
+const SongEdit = () => <div>Song Editor</div>;
+
+
 
 const App: React.FC = () => {
   return (
@@ -47,10 +44,9 @@ const App: React.FC = () => {
             resources={[
               {
                 name: "songs",
-                list: "/songs",
-                create: "/songs/create",
-                edit: "/songs/:id/edit",
-                show: "/songs/:id",
+                list: "songs",
+                edit: "songs/:id",
+                show: "songs/:id",
                 meta: {
                   canDelete: true,
                 },
@@ -59,30 +55,24 @@ const App: React.FC = () => {
             options={{
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
-              projectId: "silotech-songwriter",
+              projectId: "silotech-songwriter"
             }}
           >
             <Routes>
               <Route index element={<Landing />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route
+                path="*"
                 element={
                   <ThemedLayoutV2
-                    Header={() => <Header sticky collapsed={false} setCollapsed={() => {}} />}
+                    Header={() => <Header collapsed={false} setCollapsed={() => {}} />}
                   >
                     <Outlet />
                   </ThemedLayoutV2>
                 }
               >
-                <Route path="/songs">
+                <Route path="songs">
                   <Route index element={<SongList />} />
-                  <Route path="create" element={<SongCreate />} />
-                  <Route path=":id">
-                    <Route index element={<SongShow />} />
-                    <Route path="edit" element={<SongEdit />} />
-                  </Route>
+                  <Route path=":id" element={<SongEdit />} />
                 </Route>
                 <Route path="*" element={<ErrorComponent />} />
               </Route>

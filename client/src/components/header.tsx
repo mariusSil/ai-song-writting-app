@@ -28,7 +28,6 @@ type User = {
 };
 
 export const Header: React.FC<HeaderProps> = ({ 
-  sticky, 
   collapsed, 
   setCollapsed 
 }) => {
@@ -42,12 +41,17 @@ export const Header: React.FC<HeaderProps> = ({
     padding: "0 24px",
     height: "64px",
     backgroundColor: mode === "light" ? "#fff" : "#121212",
-    borderBottom: `1px solid ${mode === "light" ? "#f0f2f5" : "#303030"}`,
-    ...(sticky && {
-      position: "sticky" as const,
-      top: 0,
-      zIndex: 1,
-    }),
+    boxShadow: mode === "light" 
+      ? "0 4px 12px rgba(0, 0, 0, 0.08)" 
+      : "0 4px 12px rgba(0, 0, 0, 0.3)",
+    backdropFilter: "blur(8px)",
+    position: "sticky" as const,
+    top: 0,
+    zIndex: 1000,
+    width: "100%",
+    borderRadius: 0,
+    margin: 0,
+    transition: "all 0.3s ease",
   };
 
   const items: MenuProps["items"] = [
@@ -72,22 +76,34 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <AntdHeader style={headerStyles}>
+    <AntdHeader style={headerStyles} className="app-header-floating">
       <div className="flex items-center h-full flex-1">
         <Button
           type="text"
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           onClick={() => setCollapsed?.(!collapsed)}
           className="lg:hidden"
+          style={{ border: 'none' }}
         />
 
-        <div className="flex items-center gap-2 ml-4">
+        <div className="flex items-center gap-3 ml-4">
           <img 
             src="/logo.svg" 
             alt="SiloTech Logo" 
             className="h-8 w-8 hidden sm:block"
+            style={{ filter: mode === "dark" ? "brightness(1.2)" : "none" }}
           />
-          <span className="text-lg font-semibold hidden md:block">
+          <span 
+            className="text-lg font-semibold hidden md:block"
+            style={{ 
+              background: mode === "dark" 
+                ? "linear-gradient(90deg, #fff 0%, #e6e6e6 100%)" 
+                : "linear-gradient(90deg, #333 0%, #666 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
+            }}
+          >
             SiloTech SongWriter
           </span>
         </div>

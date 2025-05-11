@@ -7,6 +7,8 @@ import path from 'path';
 import { Server as SocketServer } from 'socket.io';
 import * as OpenApiValidator from 'express-openapi-validator';
 import aiRoutes from './api/ai-routes';
+import authRoutes from './routes/auth.routes';
+import profileRoutes from './routes/profile.routes';
 import env from './config/env';
 
 const app = express();
@@ -46,6 +48,8 @@ app.use(
 
 // API Routes
 app.use('/api/ai', aiRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
 
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {

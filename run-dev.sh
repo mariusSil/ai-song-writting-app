@@ -230,7 +230,7 @@ main() {
     fi
     
     # Start server
-    echo -e "${BLUE}Starting server on http://localhost:3000${NC}"
+    echo -e "${BLUE}Starting server on http://localhost:3001${NC}"
     (cd "$SERVER_DIR" && yarn dev) &
     server_pid=$!
     
@@ -246,7 +246,7 @@ main() {
     
     echo -e "${GREEN}All services are running successfully!${NC}"
     echo -e "${BLUE}Client: http://localhost:5173${NC}"
-    echo -e "${BLUE}Server: http://localhost:3000${NC}"
+    echo -e "${BLUE}Server: http://localhost:3001${NC}"
     
     # Display Supabase info if available
     if command -v supabase &> /dev/null && supabase status &> /dev/null; then
