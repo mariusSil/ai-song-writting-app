@@ -10,6 +10,7 @@ import {
 // Import all landing page components
 import NavHeader from '../../components/landing/NavHeader';
 import HeroSection from '../../components/landing/HeroSection';
+import TrustBar from '../../components/landing/TrustBar';
 import KeyBenefits from '../../components/landing/KeyBenefits';
 import HowItWorks from '../../components/landing/HowItWorks';
 import Testimonials from '../../components/landing/Testimonials';
@@ -113,8 +114,13 @@ const LandingPage: React.FC = () => {
         {/* Navigation */}
         <NavHeader />
         
-        {/* Hero Section */}
-        <HeroSection />
+        {/* Hero Section with Trust Bar */}
+        <Box sx={{ position: 'relative' }}>
+          <HeroSection />
+          <Box sx={{ position: 'absolute', bottom: 0, width: '100%' }}>
+            <TrustBar />
+          </Box>
+        </Box>
         
         {/* Key Benefits */}
         <Container maxWidth="lg" sx={{ py: 8 }}>

@@ -34,24 +34,36 @@ export const Header: React.FC<HeaderProps> = ({
   const { mode, setMode } = useContext(ColorModeContext);
   const { data: user } = useGetIdentity<User>();
 
-  const headerStyles = {
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    padding: "0 24px",
-    height: "64px",
-    backgroundColor: mode === "light" ? "#fff" : "#121212",
-    boxShadow: mode === "light" 
-      ? "0 4px 12px rgba(0, 0, 0, 0.08)" 
-      : "0 4px 12px rgba(0, 0, 0, 0.3)",
-    backdropFilter: "blur(8px)",
+  // This wrapper style will be applied to a div that contains the AntdHeader
+  const headerWrapperStyles = {
     position: "sticky" as const,
     top: 0,
     zIndex: 1000,
     width: "100%",
-    borderRadius: 0,
+    padding: "16px 24px",
+    backgroundColor: "transparent",
+    transition: "all 0.3s ease",
+    display: "flex",
+    justifyContent: "center",
+  };
+
+  // This style will be applied to the actual header component
+  const headerStyles = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0 24px",
+    height: "56px",
+    backgroundColor: mode === "light" ? "rgba(255, 255, 255, 0.9)" : "rgba(18, 18, 18, 0.85)",
+    boxShadow: mode === "light" 
+      ? "0 8px 16px rgba(0, 0, 0, 0.1)" 
+      : "0 8px 16px rgba(0, 0, 0, 0.3)",
+    backdropFilter: "blur(12px)",
+    borderRadius: "12px",
     margin: 0,
     transition: "all 0.3s ease",
+    width: "100%",
+    maxWidth: "1400px",
   };
 
   const items: MenuProps["items"] = [
@@ -76,7 +88,8 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <AntdHeader style={headerStyles} className="app-header-floating">
+    <div style={headerWrapperStyles}>
+      <AntdHeader style={headerStyles} className="app-header-floating">
       <div className="flex items-center h-full flex-1">
         <Button
           type="text"
@@ -178,5 +191,6 @@ export const Header: React.FC<HeaderProps> = ({
         )}
       </Space>
     </AntdHeader>
+    </div>
   );
 };

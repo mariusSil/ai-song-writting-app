@@ -25,10 +25,15 @@
   background-color: #121212;
 }
 
+html {
+  overflow: hidden;
+}
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Custom scrollbar */
