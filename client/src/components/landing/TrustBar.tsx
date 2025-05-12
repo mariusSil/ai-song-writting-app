@@ -46,13 +46,16 @@ const TrustBar: React.FC<TrustBarProps> = ({ className }) => {
   return (
     <Box 
       sx={{
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
         width: '100%',
         backgroundColor: mode === 'light' 
           ? 'rgba(245, 245, 245, 0.85)' 
-          : 'rgba(18, 18, 18, 0.75)',
+          : 'rgba(18, 18, 18, 0.2)',
         backdropFilter: 'blur(10px)',
         borderTop: `1px solid ${mode === 'light' ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)'}`,
-        py: { xs: 1.5, md: 2 },
+        py: { xs: 2, sm: 3, md: 4 },
         height: 'auto',
         zIndex: 5,
         boxShadow: mode === 'light'

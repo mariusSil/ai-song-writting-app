@@ -8,19 +8,20 @@ import { ColorModeContext } from '../../contexts/color-mode';
 const HeroSection: React.FC = () => {
   const { colors } = useTheme();
   const { mode } = useContext(ColorModeContext);
+  
 
   return (
     <Box sx={{ 
       position: 'relative',
       overflow: 'hidden',
-      height: '100vh',
+      height: { xs: 'auto', md: '100vh' },
       width: '100%',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      minHeight: 600,
-      pt: '88px', // Add padding at the top to account for the fixed header
-      pb: '80px', // Add padding at the bottom to make room for the TrustBar
+      minHeight: { xs: '100vh', md: 600 },
+      pt: { xs: '100px', md: '80px' },
+      pb: { xs: '200px', md: '180px' }, // Increased padding to accommodate absolute TrustBar
     }}>
       {/* Background Image with Dark Grid Overlay */}
       <Box
@@ -62,7 +63,7 @@ const HeroSection: React.FC = () => {
       />
       
       {/* Centered Content */}
-      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 3, textAlign: 'center' }}>
+      <Container maxWidth="md" sx={{ position: 'relative', zIndex: 3, textAlign: 'center', px: { xs: 2, sm: 3 } }}>
         <Box sx={{ px: 2 }}>
           <Typography 
             variant="h1" 
@@ -72,11 +73,11 @@ const HeroSection: React.FC = () => {
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              mb: 2,
-              fontSize: { xs: '2.75rem', sm: '3.5rem', md: '4.25rem' },
+              mb: 1.5, // Reduced margin bottom
+              fontSize: { xs: '2rem', sm: '3rem', md: '3.75rem' }, // Adjusted for mobile
               fontWeight: 800,
               letterSpacing: '-0.02em',
-              lineHeight: 1.1
+              lineHeight: 1
             }}
           >
             The Ultimate AI Music Studio
@@ -88,8 +89,8 @@ const HeroSection: React.FC = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              mb: 3,
-              mt: 1
+              mb: 2, // Reduced margin bottom
+              mt: 0.5 // Reduced margin top
             }}
           >
             <Box
@@ -97,8 +98,8 @@ const HeroSection: React.FC = () => {
                 bgcolor: alpha(colors.coral, 0.2),
                 border: `2px solid ${alpha(colors.coral, 0.5)}`,
                 borderRadius: '8px',
-                py: 1.5,
-                px: 3,
+                py: 1, // Reduced vertical padding
+                px: 2.5, // Reduced horizontal padding
                 position: 'relative',
                 boxShadow: `0 5px 15px ${alpha(colors.red, 0.15)}`,
                 transform: 'rotate(-1deg)',
@@ -141,32 +142,32 @@ const HeroSection: React.FC = () => {
           </Box>
           
           <Typography 
-            variant="h6" 
+            variant="body1" 
             color="text.secondary" 
             paragraph
             sx={{ 
-              maxWidth: '750px', 
+              maxWidth: '720px', 
               mx: 'auto', 
-              mb: 4,
-              fontSize: { xs: '1.1rem', md: '1.25rem' },
-              lineHeight: 1.5,
-              fontWeight: 400
+              mb: 2.5, 
+              fontSize: { xs: '0.95rem', md: '1.1rem' }, 
+              fontWeight: 400,
+              lineHeight: 1.4, 
             }}
           >
-            The only AI tool music creators need. Collect ideas, write lyrics, compose melodies, 
-            arrange tracks, and systematize your creative process — all in one powerful platform.
+            The only AI tool music creators need. Collect ideas, write lyrics, compose melodies, arrange tracks, and systematize your creative process — all in one powerful platform.
           </Typography>
           
           <Typography 
-            variant="subtitle1"
+            variant="subtitle2"
             color="text.secondary"
             sx={{ 
-              maxWidth: '650px', 
+              maxWidth: '600px', 
               mx: 'auto', 
-              mb: 2,
-              mt: 2,
+              mb: 1,
+              mt: 1,
               fontStyle: 'italic',
-              opacity: 0.9
+              opacity: 0.8,
+              fontSize: { xs: '0.8rem', md: '0.9rem' }
             }}
           >
             From inspiration to finished tracks — unleash your creativity with AI assistance.
@@ -174,20 +175,24 @@ const HeroSection: React.FC = () => {
 
           <Stack 
             direction={{ xs: 'column', sm: 'row' }} 
-            spacing={3} 
-            sx={{ mt: 4, justifyContent: 'center' }}
+            spacing={2} 
+            sx={{ 
+              mt: { xs: 4, md: 2.5 }, 
+              justifyContent: 'center',
+              mb: { xs: 4, md: 0 }
+            }}
           >
             <Button 
               variant="contained" 
               color="primary" 
-              size="large"
+              size="medium"
               component={RouterLink}
               to="/register"
               startIcon={<AutoAwesome />}
               sx={{ 
-                py: { xs: 1.5, md: 1.75 },
-                px: { xs: 3, md: 4 },
-                fontSize: { xs: '1rem', md: '1.1rem' },
+                py: { xs: 1.2, md: 1.5 },
+                px: { xs: 2.5, md: 3.5 },
+                fontSize: { xs: '0.95rem', md: '1rem' },
                 fontWeight: 600,
                 borderRadius: '8px',
                 textTransform: 'none'
